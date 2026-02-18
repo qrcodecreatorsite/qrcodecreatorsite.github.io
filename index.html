@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Multi UPI QR Generator</title>
+<title>Multi UPI QR Generator (No Logo)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <!-- 🔐 Password Protection -->
@@ -10,8 +10,8 @@
 const PASSWORD = "Hack123xyz";
 const user = prompt("Enter Password");
 if (user !== PASSWORD) {
-    alert("Access Denied");
-    document.body.innerHTML = "";
+  alert("Access Denied");
+  document.body.innerHTML = "";
 }
 </script>
 
@@ -20,121 +20,35 @@ if (user !== PASSWORD) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.14.0/jquery-qrcode.min.js"></script>
 
 <style>
-/* ---------- RESET ---------- */
-*{
-    box-sizing:border-box;
-}
-html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%}
+body{font-family:Arial,sans-serif;background:#f2f4f8;padding:12px}
+.container{width:100%;max-width:1100px;margin:auto;background:#fff;padding:14px;border-radius:14px}
+h2{margin:0 0 10px;font-size:20px}
+textarea{width:100%;min-height:120px;padding:12px;font-size:15px;border-radius:8px;border:1px solid #ccc;resize:vertical}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+button{width:100%;padding:14px;background:#5f259f;color:#fff;border:none;border-radius:8px;font-size:15px;cursor:pointer}
+button.green{background:#198754}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:16px}
+.card{background:#faf7fd;padding:12px;border-radius:12px;text-align:center}
+.card p{margin:8px 0;font-size:13px;font-weight:bold;word-break:break-all}
+.card button{padding:10px;font-size:13px}
 
-/* ---------- BASE ---------- */
-body{
-    font-family:Arial, sans-serif;
-    background:#f2f4f8;
-    padding:12px;
+/* Responsive */
+@media(max-width:360px){
+  h2{font-size:18px}
+  .actions{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
 }
-
-.container{
-    width:100%;
-    max-width:1100px;
-    margin:auto;
-    background:#fff;
-    padding:14px;
-    border-radius:14px;
+@media(min-width:361px) and (max-width:600px){
+  .actions{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
 }
-
-h2{
-    margin:0 0 10px;
-    font-size:20px;
+@media(min-width:601px) and (max-width:900px){
+  .grid{grid-template-columns:repeat(3,1fr)}
 }
-
-/* ---------- INPUT ---------- */
-textarea{
-    width:100%;
-    min-height:120px;
-    padding:12px;
-    font-size:15px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    resize:vertical;
-}
-
-/* ---------- BUTTONS ---------- */
-.actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:10px;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    background:#5f259f;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    font-size:15px;
-    cursor:pointer;
-}
-
-button.green{
-    background:#198754;
-}
-
-/* ---------- GRID ---------- */
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
-    gap:14px;
-    margin-top:16px;
-}
-
-/* ---------- CARD ---------- */
-.card{
-    background:#faf7fd;
-    padding:12px;
-    border-radius:12px;
-    text-align:center;
-}
-
-.card p{
-    margin:8px 0;
-    font-size:13px;
-    font-weight:bold;
-    word-break:break-all;
-}
-
-.card button{
-    padding:10px;
-    font-size:13px;
-}
-
-/* ---------- SMALL PHONES (≤360px) ---------- */
-@media (max-width:360px){
-    h2{font-size:18px;}
-    textarea{font-size:14px;}
-    .actions{grid-template-columns:1fr;}
-    .grid{grid-template-columns:1fr;}
-}
-
-/* ---------- PHONES (361px–600px) ---------- */
-@media (min-width:361px) and (max-width:600px){
-    .actions{grid-template-columns:1fr;}
-    .grid{grid-template-columns:repeat(2,1fr);}
-}
-
-/* ---------- TABLETS (601px–900px) ---------- */
-@media (min-width:601px) and (max-width:900px){
-    .grid{grid-template-columns:repeat(3,1fr);}
-}
-
-/* ---------- LARGE SCREENS (901px+) ---------- */
-@media (min-width:901px){
-    .grid{grid-template-columns:repeat(4,1fr);}
+@media(min-width:901px){
+  .grid{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
@@ -142,104 +56,88 @@ button.green{
 <body>
 
 <div class="container">
-    <h2>Multiple UPI QR Generator</h2>
+  <h2>Multiple UPI QR Generator</h2>
 
-    <textarea id="upiList" placeholder="paytm.s1enrsw@pty
+  <textarea id="upiList" placeholder="paytm.s1enrsw@pty
 shop1@ybl
 mobilecare@upi"></textarea>
 
-    <div class="actions">
-        <button onclick="generateMultipleQR()">Generate QR Codes</button>
-        <button class="green" onclick="downloadAllQRs()">Download All QRs</button>
-    </div>
+  <div class="actions">
+    <button onclick="generateMultipleQR()">Generate QR Codes</button>
+    <button class="green" onclick="downloadAllQRs()">Download All QRs</button>
+  </div>
 
-    <div class="grid" id="qrContainer"></div>
+  <div class="grid" id="qrContainer"></div>
 </div>
-
-<!-- UPI LOGO -->
-<img src="upi-logo.png" id="upilogo" style="display:none">
 
 <script>
 function getQRSize(){
-    const w = window.innerWidth;
-    if(w < 360) return 160;
-    if(w < 600) return 180;
-    if(w < 900) return 200;
-    return 220;
+  const w = window.innerWidth;
+  if(w < 360) return 160;
+  if(w < 600) return 180;
+  if(w < 900) return 200;
+  return 220;
 }
 
 function generateMultipleQR(){
-    $("#qrContainer").html("");
-    const size = getQRSize();
+  $("#qrContainer").html("");
+  const size = getQRSize();
 
-    const upis = $("#upiList").val()
-        .split("\n")
-        .map(u => u.trim())
-        .filter(u => u !== "");
+  const upis = $("#upiList").val()
+    .split("\n")
+    .map(u => u.trim())
+    .filter(u => u !== "");
 
-    upis.forEach((upi, i) => {
+  upis.forEach((upi, i) => {
+    const box = $(`
+      <div class="card">
+        <div id="qr_${i}"></div>
+        <p>${upi}</p>
+        <button onclick="downloadQR('qr_${i}','${upi}')">Download</button>
+      </div>
+    `);
+    $("#qrContainer").append(box);
 
-        const box = $(`
-            <div class="card">
-                <div id="qr_${i}"></div>
-                <p>${upi}</p>
-                <button onclick="downloadQR('qr_${i}','${upi}')">Download</button>
-            </div>
-        `);
+    /* ✅ STATIC MERCHANT PAYLOAD – SAFE FOR SCAN */
+    const payload =
+      "upi://pay?pa=" + encodeURIComponent(upi) +
+      "&pn=" + encodeURIComponent("Mobile Store") +
+      "&mc=0000" +
+      "&mode=02" +
+      "&cu=INR";
 
-        $("#qrContainer").append(box);
-
-        const payload =
-            "upi://pay?pa=" + encodeURIComponent(upi) +
-            "&pn=" + encodeURIComponent("Mobile Store") +
-            "&cu=INR";
-
-        $("#qr_" + i).qrcode({
-            width:size,
-            height:size,
-            text:payload
-        });
-
-        setTimeout(()=>{
-            const canvas = $("#qr_" + i + " canvas")[0];
-            const ctx = canvas.getContext("2d");
-            const logo = document.getElementById("upilogo");
-
-            const logoSize = size * 0.22;
-            const x = (canvas.width - logoSize)/2;
-            const y = (canvas.height - logoSize)/2;
-
-            ctx.fillStyle="white";
-            ctx.fillRect(x-6,y-6,logoSize+12,logoSize+12);
-            ctx.drawImage(logo,x,y,logoSize,logoSize);
-        },100);
+    $("#qr_" + i).qrcode({
+      width:size,
+      height:size,
+      text:payload
     });
+  });
 }
 
 function downloadQR(id, upi){
-    const canvas = $("#" + id + " canvas")[0];
-    const link = document.createElement("a");
-    link.download = upi + ".png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+  const canvas = $("#" + id + " canvas")[0];
+  const link = document.createElement("a");
+  link.download = upi + ".png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
 }
 
 function downloadAllQRs(){
-    const qrDivs = document.querySelectorAll("[id^='qr_']");
-    if(!qrDivs.length){
-        alert("Generate QR codes first");
-        return;
-    }
-    qrDivs.forEach((qrDiv, index) => {
-        const canvas = qrDiv.querySelector("canvas");
-        const upi = qrDiv.nextElementSibling.innerText;
-        setTimeout(() => {
-            const link = document.createElement("a");
-            link.download = upi + ".png";
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-        }, index * 300);
-    });
+  const qrDivs = document.querySelectorAll("[id^='qr_']");
+  if(!qrDivs.length){
+    alert("Generate QR codes first");
+    return;
+  }
+  qrDivs.forEach((qrDiv, index) => {
+    const canvas = qrDiv.querySelector("canvas");
+    const upi = qrDiv.nextElementSibling.innerText;
+    setTimeout(() => {
+      const link = document.createElement("a");
+      link.download = upi + ".png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }, index * 300);
+  });
 }
 </script>
 
