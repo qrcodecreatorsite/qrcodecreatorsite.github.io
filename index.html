@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Private UPI QR Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 🔐 Password Protection -->
+<script>
+const PASSWORD = "Jishan@0511"; // change password
+const user = prompt("Enter Admin Password");
+if (user !== PASSWORD) {
+    alert("Access Denied");
+    document.body.innerHTML = "";
+}
+</script>
+
+<style>
+:root {
+    --purple: #5f259f;
+    --light-purple: #f4ecfb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #5f259f, #7b3fe4);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    background: var(--purple);
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.header h1 {
+    font-size: 22px;
+    color: var(--purple);
+    margin: 0;
+}
+
+/* Input */
+textarea {
+    width: 100%;
+    height: 130px;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid var(--light-purple);
+    outline: none;
+}
+
+textarea:focus {
+    border-color: var(--purple);
+}
+
+/* Button */
+button {
+    margin-top: 14px;
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+/* QR Card */
+.qr-card {
+    background: #faf7fd;
+    border-radius: 14px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.qr-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(95,37,159,0.25);
+}
+
+.qr-card p {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #333;
+    word-break: break-all;
+    font-size: 14px;
+}
+
+.qr-card span {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Footer hint */
+.hint {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="logo">₹</div>
+        <h1>Private UPI QR Generator</h1>
+    </div>
+
+    <textarea id="upiList" placeholder="paytm.s1enrsw@pty
+shop1@upi
+mobilecare@ybl"></textarea>
+
+    <button onclick="generateQR()">Generate QR Codes</button>
+
+    <div class="grid" id="qrContainer"></div>
+
+    <div class="hint">👆 Click any QR to download PNG</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+function generateQR() {
+    const container = document.getElementById("qrContainer");
+    container.innerHTML = "";
+
+    const upis = document.getElementById("upiList").value
+        .split("\n")
+        .map(u => u.trim())
+        .filter(u => u !== "");
+
+    upis.forEach((upi, i) => {
+        const card = document.createElement("div");
+        card.className = "qr-card";
+
+        const qrDiv = document.createElement("div");
+        qrDiv.id = "qr" + i;
+
+        const text = document.createElement("p");
+        text.textContent = upi;
+
+        const hint = document.createElement("span");
+        hint.textContent = "Tap to download";
+
+        card.appendChild(qrDiv);
+        card.appendChild(text);
+        card.appendChild(hint);
+        container.appendChild(card);
+
+        new QRCode(qrDiv, {
+            text: "upi://pay?pa=" + upi,
+            width: 180,
+            height: 180
+        });
+
+        card.onclick = () => {
+            const img = qrDiv.querySelector("img");
+            const link = document.createElement("a");
+            link.href = img.src;
+            link.download = upi + ".png";
+            link.click();
+        };
+    });
+}
+</script>
+
+</body>
+</html>
