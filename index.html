@@ -7,7 +7,7 @@
 
 <!-- 🔐 Password Protection -->
 <script>
-const PASSWORD = "Hack123xyz"; // change password
+const PASSWORD = "Hack123xyz";
 const user = prompt("Enter Admin Password");
 if (user !== PASSWORD) {
     alert("Access Denied");
@@ -21,9 +21,7 @@ if (user !== PASSWORD) {
     --light-purple: #f4ecfb;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -33,7 +31,6 @@ body {
     padding: 20px;
 }
 
-/* Container */
 .container {
     max-width: 1000px;
     margin: auto;
@@ -43,7 +40,6 @@ body {
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
-/* Header */
 .header {
     display: flex;
     align-items: center;
@@ -70,7 +66,6 @@ body {
     margin: 0;
 }
 
-/* Input */
 textarea {
     width: 100%;
     height: 130px;
@@ -81,11 +76,8 @@ textarea {
     outline: none;
 }
 
-textarea:focus {
-    border-color: var(--purple);
-}
+textarea:focus { border-color: var(--purple); }
 
-/* Button */
 button {
     margin-top: 14px;
     width: 100%;
@@ -98,11 +90,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    opacity: 0.9;
-}
-
-/* Grid */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -110,7 +97,6 @@ button:hover {
     margin-top: 25px;
 }
 
-/* QR Card */
 .qr-card {
     background: #faf7fd;
     border-radius: 14px;
@@ -138,7 +124,6 @@ button:hover {
     color: #666;
 }
 
-/* Footer hint */
 .hint {
     text-align: center;
     margin-top: 15px;
@@ -151,7 +136,6 @@ button:hover {
 <body>
 
 <div class="container">
-
     <div class="header">
         <div class="logo">₹</div>
         <h1>Private UPI QR Generator</h1>
@@ -164,7 +148,6 @@ mobilecare@ybl"></textarea>
     <button onclick="generateQR()">Generate QR Codes</button>
 
     <div class="grid" id="qrContainer"></div>
-
     <div class="hint">👆 Click any QR to download PNG</div>
 </div>
 
@@ -198,8 +181,17 @@ function generateQR() {
         card.appendChild(hint);
         container.appendChild(card);
 
+        const txnId = "TXN" + Date.now() + i;
+        const refId = "INV" + Date.now() + i;
+
         new QRCode(qrDiv, {
-            text: "upi://pay?pa=" + upi,
+            text:
+              "upi://pay?pa=" + encodeURIComponent(upi) +
+              "&pn=" + encodeURIComponent("Mobile Store") +
+              "&mc=0000" +
+              "&tid=" + txnId +
+              "&tr=" + refId +
+              "&cu=INR",
             width: 180,
             height: 180
         });
@@ -217,4 +209,3 @@ function generateQR() {
 
 </body>
 </html>
-
